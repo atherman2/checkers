@@ -39,8 +39,8 @@ public partial class Tile : Node2D
 		if(inputEvent.IsActionPressed("select") && listening)
 		{
 			GD.Print($"Selected {Name}");
+			EmitSignal(SignalName.Selected, this);
 		}
-		EmitSignal(SignalName.Selected, this);
 	}
 	public void UpdateArea2D()
 	{

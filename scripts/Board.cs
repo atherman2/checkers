@@ -14,16 +14,18 @@ public partial class Board : Node2D
 	{
 		tilePackedScene = GD.Load<PackedScene>("res://scenes/tile.tscn");
 		piecePackedScene = GD.Load<PackedScene>("res://scenes/piece.tscn");
-		
-		for(int position = 1; position < 64; position += 2)
-		{
-			LoadPosition(position);
-		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+	public void LoadBoard()
+	{
+		for(int position = 1; position < 64; position += 2)
+		{
+			LoadPosition(position);
+		}
 	}
 	private void LoadPosition(int position)
 	{
@@ -33,9 +35,9 @@ public partial class Board : Node2D
 		int tileColumn = position%8 - tileRow%2;
 		tile.Position = TilePositionToBoardPosition(tileColumn, tileRow);
 		tile.Row = tileRow;
-		tile.Column = tile.Column;
+		tile.Column = tileColumn;
 		tiles[tileColumn, tileRow] = tile;
-		
+
 		Piece piece = (Piece) piecePackedScene.Instantiate();
 		if((tileRow <= 1) || (tileRow >= 6))
 		{
@@ -63,5 +65,10 @@ public partial class Board : Node2D
 	public Vector2 TilePositionToBoardPosition(int tileColumn, int tileRow)
 	{
 		return Position + new Vector2(50.0f * (tileColumn - 3.5f), 50.0f * (tileRow - 3.5f));
+	}
+
+	public Tile GetTile(int column, int row)
+	{
+		return tiles[column, row];
 	}
 }

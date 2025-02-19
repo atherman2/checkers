@@ -51,8 +51,8 @@ public partial class Piece : Node2D
 		if(inputEvent.IsActionPressed("select"))
 		{
 			GD.Print($"Selected {Name}");
+			EmitSignal(SignalName.Selected, this);
 		}
-		EmitSignal(SignalName.Selected, this);
 	}
 	public void SetBlackTextureOn()
 	{
