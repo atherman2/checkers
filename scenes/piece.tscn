@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://wune1hamujm3"]
+
+[ext_resource type="Script" path="res://scripts/Piece.cs" id="1_ka0sj"]
+[ext_resource type="Texture2D" uid="uid://o0wgy6phdd72" path="res://assets/sprites/redPiece.png" id="2_6w4el"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x2hjt"]
+radius = 19.0263
+
+[node name="Piece" type="Node2D" node_paths=PackedStringArray("area2D", "sprite2D")]
+script = ExtResource("1_ka0sj")
+area2D = NodePath("Area2D")
+sprite2D = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6w4el")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_x2hjt")
