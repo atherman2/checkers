@@ -37,8 +37,26 @@ public partial class Game : Node2D
 				rowDirection = -1;
 			if(tile.Piece == null)
 			{
-				if(CanSelectedPieceMoveToTile(tile, rowDirection))
-				MoveSelectedPieceToTile(tile);
+				if(CanSelectedPieceSimpleMoveToTile(tile, rowDirection))
+				{
+					MoveSelectedPieceToTile(tile);
+					if(playerTurn == Piece.PlayerSide.RED)
+						playerTurn = Piece.PlayerSide.BLACK;
+					else
+						playerTurn = Piece.PlayerSide.RED;
+				}
+				else if(CanSelectedJumpMoveToTile(tile, rowDirection))
+				{
+					Tile jumpedTile = board.GetTile
+					(
+						selectedPiece.TileColumn + (tile.Column - selectedPiece.TileColumn) / 2,
+						selectedPiece.TileRow + (tile.Row - selectedPiece.TileRow) / 2
+					);
+					jumpedTile.Piece.QueueFree();
+					jumpedTile.Piece = null;
+					jumpedTile.UpdateArea2D();
+					MoveSelectedPieceToTile(tile);
+				}
 			}
 		}
 	}
@@ -64,13 +82,8 @@ public partial class Game : Node2D
 
 		if((tile.Row == 0) || (tile.Row == 7))
 			selectedPiece.IsKing = true;
-
-		if(playerTurn == Piece.PlayerSide.RED)
-			playerTurn = Piece.PlayerSide.BLACK;
-		else
-			playerTurn = Piece.PlayerSide.RED;
 	}
-	public bool CanSelectedPieceMoveToTile(Tile tile, int rowDirection)
+	public bool CanSelectedPieceSimpleMoveToTile(Tile tile, int rowDirection)
 	{
 		return
 		(
@@ -91,6 +104,27 @@ public partial class Game : Node2D
 				(tile.Column == selectedPiece.TileColumn + 1)
 				|| (tile.Column == selectedPiece.TileColumn - 1)
 			)
+		);
+	}
+	public bool CanSelectedJumpMoveToTile(Tile tile, int rowDirection)
+	{
+		return
+		(Math.Abs(tile.Row - selectedPiece.TileRow) == 2)
+		&& (Math.Abs(tile.Column - selectedPiece.TileColumn) == 2)	
+		&&
+		(
+			(rowDirection == Math.Sign(tile.Row - selectedPiece.TileRow))
+			||
+			selectedPiece.IsKing
+		)
+		&&
+		(
+			board.GetTile
+			(
+				selectedPiece.TileColumn + ((tile.Column - selectedPiece.TileColumn) / 2),
+				selectedPiece.TileRow + ((tile.Row - selectedPiece.TileRow) / 2)
+			)
+			.Piece != null
 		);
 	}
 }
