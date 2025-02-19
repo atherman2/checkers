@@ -15,6 +15,12 @@ public partial class Piece : Node2D
 		get => side;
 		set => side = value;
 	}
+	protected bool isKing;
+	public bool IsKing
+	{
+		get => isKing;
+		set => isKing = value;
+	}
 	[Export] protected int tileRow, tileColumn;
 	public int TileRow
 	{

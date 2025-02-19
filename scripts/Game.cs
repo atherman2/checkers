@@ -5,6 +5,7 @@ public partial class Game : Node2D
 {
 	[Export] protected Board board;
 	protected Piece selectedPiece;
+	protected Piece.PlayerSide playerTurn = Piece.PlayerSide.RED;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -29,12 +30,35 @@ public partial class Game : Node2D
 	{
 		if(selectedPiece != null)
 		{
-			MoveSelectedPieceToTile(tile);
+			int rowDirection;
+			if(playerTurn == Piece.PlayerSide.BLACK)
+				rowDirection = 1;
+			else
+				rowDirection = -1;
+			if(tile.Piece == null)
+			{
+				if(selectedPiece.IsKing)
+				{
+				}
+				if
+				(
+					(tile.Row == selectedPiece.TileRow + rowDirection)
+					&&
+					(
+						(tile.Column == selectedPiece.TileColumn + 1)
+						|| (tile.Column == selectedPiece.TileColumn - 1)
+					)
+				)
+				MoveSelectedPieceToTile(tile);
+			}
 		}
 	}
 	public void OnPieceSelected(Piece piece)
 	{
-		selectedPiece = piece;
+		if(playerTurn == piece.Side)
+			selectedPiece = piece;
+		else
+			selectedPiece = null;
 	}
 	public void MoveSelectedPieceToTile(Tile tile)
 	{
