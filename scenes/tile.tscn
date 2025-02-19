@@ -1,11 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvlrlomnk6nyr"]
+[gd_scene load_steps=4 format=3 uid="uid://cvlrlomnk6nyr"]
 
 [ext_resource type="Script" path="res://scripts/Tile.cs" id="1_a2pt5"]
 [ext_resource type="Texture2D" uid="uid://eds4votivpd0" path="res://assets/sprites/tile.png" id="2_fn6lm"]
 
-[node name="Tile" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qfo5m"]
+size = Vector2(50, 50)
+
+[node name="Tile" type="Node2D" node_paths=PackedStringArray("area2D")]
 script = ExtResource("1_a2pt5")
+area2D = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
 texture = ExtResource("2_fn6lm")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_qfo5m")

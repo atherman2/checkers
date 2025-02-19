@@ -2,5 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/Board.cs" id="1_tkacf"]
 
-[node name="Board" type="Node2D"]
+[node name="Board" type="Node2D" node_paths=PackedStringArray("tilesNode", "piecesNode")]
 script = ExtResource("1_tkacf")
+tilesNode = NodePath("TilesNode")
+piecesNode = NodePath("PiecesNode")
+
+[node name="TilesNode" type="Node" parent="."]
+
+[node name="PiecesNode" type="Node" parent="."]
