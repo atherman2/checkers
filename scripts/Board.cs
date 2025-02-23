@@ -39,7 +39,7 @@ public partial class Board : Node2D
 		tiles[tileColumn, tileRow] = tile;
 
 		Piece piece = (Piece) piecePackedScene.Instantiate();
-		if((tileRow <= 1) || (tileRow >= 6))
+		if((tileRow <= 2) || (tileRow >= 5))
 		{
 			piecesNode.AddChild(piece);
 			piece.Position = TilePositionToBoardPosition(tileColumn, tileRow);
@@ -48,7 +48,7 @@ public partial class Board : Node2D
 			piece.TileRow = tileRow;
 			piece.TileColumn = tileColumn;
 
-			if(tileRow <= 1)
+			if(tileRow <= 2)
 			{
 				piece.Side = Piece.PlayerSide.BLACK;
 				piece.SetBlackTextureOn();
